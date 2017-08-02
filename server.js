@@ -48,24 +48,23 @@ function handleError(res, reason, message, code) {
     res.status(code || 500).json({ 'error': message });
 }
 
-app.get('/', function(req, res) {
+const apiRoutes = express.Router();
+
+apiRoutes.get('/', function(req, res) {
     res.send('Hello! The API is running...');
 });
 
-app.get('/setup', function(req, res) {
-    const phil = new User({
-        name: 'Phil Lipman',
-        admin: true,
-    })
-
-    phil.save(function(err) {
-        if (err) {
-             handleError(res, err.message, 'Failed to add user.');
-        }
-        console.log('User saved successfully');
-        res.json({ success: true });
+apiRoutes.get('/users', function(req, res) {
+    User.find({}, function(err, users) {
+         if (err) {
+             handleError(res, err.message, 'Failed to get users.');
+         }
+        res.json(users);
     })
 });
+
+app.use('/api', apiRoutes);
+
 
 // app.get('/contacts', function(req, res) {
 //     db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
