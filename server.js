@@ -40,6 +40,9 @@ app.use(bodyParser.json());
 
 app.use(morgan('dev'));
 
+app.listen(port);
+console.log('Magic happens at port:' + port);
+
 function handleError(res, reason, message, code) {
     console.log('ERROR: ' + reason);
     res.status(code || 500).json({ 'error': message });
@@ -49,8 +52,20 @@ app.get('/', function(req, res) {
     res.send('Hello! The API is running...');
 });
 
-app.listen(port);
-console.log('Magic happens at port:' + port);
+app.get('/setup', function(req, res) {
+    const phil = new User({
+        name: 'Phil Lipman',
+        admin: true,
+    })
+
+    phil.save(function(err) {
+        if (err) {
+             handleError(res, err.message, 'Failed to add user.');
+        }
+
+        res.json({ success: true });
+    })
+});
 
 // app.get('/contacts', function(req, res) {
 //     db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
