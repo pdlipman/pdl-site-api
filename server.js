@@ -50,15 +50,44 @@ function handleError(res, reason, message, code) {
 
 const apiRoutes = express.Router();
 
-apiRoutes.get('/', function(req, res) {
+apiRoutes.post('/authenticate', function (req, res) {
+    User.findOne({
+        name: req.body.name
+    }, function (err, user) {
+        if (err) {
+            handleError(res, err.message, 'Failed to get user.');
+        }
+
+        if (!user) {
+            res.json({ success: false, message: 'Authentication failed. User not found.' });
+        } else if (user) {
+            if (user.password != req.body.password) {
+                res.json({ success: false, message: 'Authentication failed. Incorrect password.' });
+            } else {
+                const token = jwt.sign(user, app.get('superSecret'), {
+                    expiresInMinutes: 1440,
+                });
+
+                res.json({
+                    success: true,
+                    message: 'Enjoy your token!',
+                    token: token,
+                });
+            }
+        }
+
+    });
+});
+
+apiRoutes.get('/', function (req, res) {
     res.send('Hello! The API is running...');
 });
 
-apiRoutes.get('/users', function(req, res) {
-    User.find({}, function(err, users) {
-         if (err) {
-             handleError(res, err.message, 'Failed to get users.');
-         }
+apiRoutes.get('/users', function (req, res) {
+    User.find({}, function (err, users) {
+        if (err) {
+            handleError(res, err.message, 'Failed to get users.');
+        }
         res.json(users);
     })
 });
@@ -98,15 +127,15 @@ app.use('/api', apiRoutes);
 //     PUT: update contact by id
 //     DELETE: deletes contact by id
 
-app.get('/contacts/:id', function(req, res) {
+app.get('/contacts/:id', function (req, res) {
 
 });
 
-app.put('/contacts/:id', function(req, res) {
+app.put('/contacts/:id', function (req, res) {
 
 });
 
-app.delete('/contacts/:id', function(req, res) {
+app.delete('/contacts/:id', function (req, res) {
 
 });
 
