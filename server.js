@@ -62,7 +62,7 @@ app.get('/setup', function(req, res) {
         if (err) {
              handleError(res, err.message, 'Failed to add user.');
         }
-
+        console.log('User saved successfully');
         res.json({ success: true });
     })
 });
