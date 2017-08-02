@@ -1,7 +1,6 @@
 {
-  "name": "MEAN",
+  "name": "pdl-site-api",
   "version": "1.0.0",
-  "description": "A MEAN app that allows users to manage contact lists",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +9,10 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "mongodb": "^2.2.30"
+    "jsonwebtoken": "^7.4.1",
+    "mongodb": "^2.2.30",
+    "mongoose": "^4.11.5",
+    "morgan": "^1.8.2"
   },
   "devDependencies": {
     "eslint": "^4.3.0"
