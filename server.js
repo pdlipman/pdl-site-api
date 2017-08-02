@@ -11,8 +11,8 @@ const jwt = require('jsonwebtoken');
 const config = require('./config');
 const User = require('./app/models/user');
 
-const CONTACTS_COLLECTION = 'contacts';
 const port = process.env.PORT || 8080;
+const ONE_DAY_IN_SECONDS = 60*60*24;
 
 const app = express();
 
@@ -65,7 +65,7 @@ apiRoutes.post('/authenticate', function (req, res) {
                 res.json({ success: false, message: 'Authentication failed. Incorrect password.' });
             } else {
                 const token = jwt.sign(user, app.get('superSecret'), {
-                    expiresInMinutes: 1440,
+                    expiresIn: ONE_DAY_IN_SECONDS,
                 });
 
                 res.json({
