@@ -11,6 +11,22 @@ const ObjectId = mongodb.ObjectId;
 const CONTACTS_COLLECTION = 'contacts';
 
 const app = express();
+
+const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
+};
+
+app.use(allowCrossDomain);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
@@ -85,3 +101,17 @@ app.put('/contacts/:id', function(req, res) {
 app.delete('/contacts/:id', function(req, res) {
 
 });
+
+const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
+};
