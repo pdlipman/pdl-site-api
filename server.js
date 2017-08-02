@@ -30,11 +30,14 @@ const app = express();
 // };
 //
 // app.use(allowCrossDomain);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 mongoose.connect(config.database);
 app.set('superSecret', config.secret);
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(morgan('dev'));
 
 function handleError(res, reason, message, code) {
     console.log('ERROR: ' + reason);
