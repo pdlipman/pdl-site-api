@@ -15,6 +15,7 @@ const port = process.env.PORT || 8080;
 const ONE_DAY_IN_SECONDS = 60*60*24;
 
 const app = express();
+const apiRoutes = express.Router();
 
 // const allowCrossDomain = function(req, res, next) {
 //     res.header('Access-Control-Allow-Origin', '*');
@@ -48,14 +49,23 @@ function handleError(res, reason, message, code) {
     res.status(code || 500).json({ 'error': message });
 }
 
-const apiRoutes = express.Router();
+function generateToken(user) {
+    const u = {
+        name: user.name,
+        admin: user.admin,
+    };
+
+    return token = jwt.sign(u, app.get('superSecret'), {
+        expiresIn: ONE_DAY_IN_SECONDS,
+    });
+}
 
 apiRoutes.post('/authenticate', function (req, res) {
     User.findOne({
         name: req.body.name
     }, function (err, user) {
         if (err) {
-            handleError(res, err.message, 'Failed to get user.');
+            throw err;
         }
 
         if (!user) {
@@ -64,9 +74,7 @@ apiRoutes.post('/authenticate', function (req, res) {
             if (user.password != req.body.password) {
                 res.json({ success: false, message: 'Authentication failed. Incorrect password.' });
             } else {
-                const token = jwt.sign(user, app.get('superSecret'), {
-                    expiresIn: ONE_DAY_IN_SECONDS,
-                });
+                const token = generateToken(user);
 
                 res.json({
                     success: true,
