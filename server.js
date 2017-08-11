@@ -79,6 +79,26 @@ apiRoutes.post('/authenticate', function (req, res) {
     });
 });
 
+apiRoutes.use(function(req, res, next) {
+    const token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+    if (token) {
+        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+                req.decoded = decoded;
+                next();
+            }
+        });
+    } else {
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided',
+        });
+    }
+});
+
 apiRoutes.get('/', function (req, res) {
     res.send('Hello! The API is running...');
 });
