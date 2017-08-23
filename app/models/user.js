@@ -38,8 +38,9 @@ UserSchema.pre('save', function(next) {
     if (!user.isModified('password')) {
         return next();
     }
+    bcrypt.ge
 
-    bcrypt.getSalt(saltFactor, function(err, salt) {
+    bcrypt.genSalt(saltFactor, function(err, salt) {
         if (err) {
             return next(err);
         }
