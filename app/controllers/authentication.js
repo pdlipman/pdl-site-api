@@ -83,11 +83,7 @@ exports.register = function (req, res, next) {
                 return next(err);
             }
 
-            // Subscribe member to Mailchimp list
-            // mailchimp.subscribeToNewsletter(user.email);
-
             // Respond with JWT if user was created
-
             const userInfo = setUserInfo(user);
 
             res.status(201).json({
