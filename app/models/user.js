@@ -39,7 +39,7 @@ UserSchema.pre('save', function(next) {
         return next();
     }
 
-    bcrypt.getSalt(saltFactor, function(err, salt) {
+    bcrypt.genSalt(saltFactor, function(err, salt) {
         if (err) {
             return next(err);
         }
