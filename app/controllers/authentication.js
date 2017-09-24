@@ -24,7 +24,7 @@ function setUserInfo(request) {
 //========================================
 // Login Route
 //========================================
-exports.login = function (req, res, next) {
+module.exports.login = function (req, res, next) {
 
     const userInfo = setUserInfo(req.user);
 
@@ -38,7 +38,7 @@ exports.login = function (req, res, next) {
 //========================================
 // Registration Route
 //========================================
-exports.register = function (req, res, next) {
+module.exports.register = function (req, res, next) {
     // Check for registration errors
     const email = req.body.email;
     const firstName = req.body.firstName;
@@ -99,7 +99,7 @@ exports.register = function (req, res, next) {
 //========================================
 
 // Role authorization check
-exports.roleAuthorization = function(role) {
+module.exports.roleAuthorization = function(role) {
     return function(req, res, next) {
         const user = req.user;
 

@@ -26,10 +26,15 @@ const allowCrossDomain = function(req, res, next) {
     }
 };
 
-mongoose.connect(config.database);
+mongoose.connect(
+    config.database,
+    {
+        useMongoClient: true
+    }
+);
 
 app.use(allowCrossDomain);
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 

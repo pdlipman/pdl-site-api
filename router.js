@@ -15,6 +15,7 @@ const REQUIRE_MEMBER = 'Member';
 module.exports = function(app) {
     const apiRoutes = express.Router();
     const authRoutes = express.Router();
+    const contentRoutes = express.Router();
     //=========================
     // Auth Routes
     //=========================
@@ -30,8 +31,16 @@ module.exports = function(app) {
 
     // Test protected route
     apiRoutes.get('/protected', requireAuth, (req, res) => {
+        console.log('hello world');
         res.send({ content: 'The protected test route is functional!' });
     });
+
+    //=========================
+    // Content Routes
+    //=========================
+
+    // Set auth routes as subgroup/middleware to apiRoutes
+    apiRoutes.use('/content', contentRoutes);
 
     // Set url for API group routes
     app.use('/api', apiRoutes);
