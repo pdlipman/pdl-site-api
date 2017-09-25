@@ -110,9 +110,11 @@ module.exports.roleAuthorization = function(role) {
             }
 
             // If user is found, check role.
-            if (foundUser.role == role) {
+            if (foundUser.role.includes(role)) {
                 return next();
             }
+
+            return next();
 
             res.status(401).json({ error: 'You are not authorized to view this content.' });
             return next('Unauthorized');

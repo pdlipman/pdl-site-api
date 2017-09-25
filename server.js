@@ -26,6 +26,7 @@ const allowCrossDomain = function(req, res, next) {
     }
 };
 
+mongoose.Promise = global.Promise;
 mongoose.connect(
     config.database,
     {

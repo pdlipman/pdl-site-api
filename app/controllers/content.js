@@ -13,7 +13,7 @@ module.exports.addCard = function (req, res, next) {
         parentId
     });
 
-    card.save(function (err, user) {
+    card.save(function (err, card) {
         if (err) {
             return next(err);
         }
