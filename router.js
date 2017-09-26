@@ -50,6 +50,11 @@ module.exports = function(app) {
         ContentController.addCard
     );
 
+    contentRoutes.get('/get-cards', ContentController.getCards);
+    // contentRoutes.get('/get-cards', (req, res) => {
+    //     res.send({cards: ['hello', 'world']});
+    // });
+
     // Set url for API group routes
     app.use('/api', apiRoutes);
 };

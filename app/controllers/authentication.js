@@ -68,7 +68,9 @@ module.exports.register = function (req, res, next) {
 
         // If user is not unique, return error
         if (existingUser) {
-            return res.status(422).send({ error: 'That email address is already in use.' });
+            return res
+                .status(422)
+                .send({ error: 'That email address is already in use.' });
         }
 
         // If email is unique and password was provided, create account
@@ -86,10 +88,12 @@ module.exports.register = function (req, res, next) {
             // Respond with JWT if user was created
             const userInfo = setUserInfo(user);
 
-            res.status(201).json({
-                token: 'JWT ' + generateToken(userInfo),
-                user: userInfo
-            });
+            res
+                .status(201)
+                .json({
+                    token: 'JWT ' + generateToken(userInfo),
+                    user: userInfo
+                });
         });
     });
 };

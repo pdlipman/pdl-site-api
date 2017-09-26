@@ -23,3 +23,17 @@ module.exports.addCard = function (req, res, next) {
         });
     });
 };
+
+module.exports.getCards = function (req, res, next) {
+    Card.find({}, function(err, cards) {
+        if (err) {
+            return next(err);
+        }
+
+        res
+            .status(201)
+            .json({
+                cards
+            });
+    });
+};
