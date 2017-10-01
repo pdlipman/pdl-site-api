@@ -10,6 +10,14 @@ const CardSchema = new Schema(
         },
         parentId: {
             type: Schema.ObjectId
+        },
+        seq: {
+            type: Number,
+            unique: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
         }
     }
 );
