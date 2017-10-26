@@ -3,6 +3,7 @@ const Card = require('../models/card.js');
 module.exports.addCard = function (req, res, next) {
     const label = req.body.label;
     const parentId = req.body.parentId;
+    const content = req.body.content;
 
     if (!label) {
         return res.status(422).send({ error: 'You must enter a label.'});
@@ -10,7 +11,8 @@ module.exports.addCard = function (req, res, next) {
 
     const card = new Card({
         label,
-        parentId
+        parentId,
+        content
     });
 
     card.save(function (err, card) {
@@ -19,7 +21,7 @@ module.exports.addCard = function (req, res, next) {
         }
 
         res.status(201).json({
-            message: 'card created'
+            message: `card created: ${card._id}`
         });
     });
 };

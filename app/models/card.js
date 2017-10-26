@@ -11,6 +11,9 @@ const CardSchema = new Schema(
         parentId: {
             type: Schema.ObjectId
         },
+        content: {
+            type: String
+        },
         seq: {
             type: Number,
             unique: true
