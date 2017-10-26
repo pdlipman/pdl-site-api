@@ -46,7 +46,7 @@ module.exports = function(app) {
     contentRoutes.post(
         '/add-card',
         requireAuth,
-        AuthenticationController.roleAuthorization(ROLE_ADMIN),
+        // AuthenticationController.roleAuthorization(ROLE_ADMIN),
         ContentController.addCard
     );
 
