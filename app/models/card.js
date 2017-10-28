@@ -16,7 +16,7 @@ const CardSchema = new Schema(
         },
         seq: {
             type: Number,
-            unique: true
+            // unique: true
         },
         createdAt: {
             type: Date,
